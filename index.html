@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SK Bank</title>
+</head>
+<body>
+
+<h2>Open Zero Balance Account</h2>
+
+<input id="fname" placeholder="First Name"><br><br>
+<input id="lname" placeholder="Last Name"><br><br>
+<input id="mobile" placeholder="Mobile Number"><br><br>
+<input id="email" placeholder="Email"><br><br>
+
+<button onclick="register()">Create Account</button>
+
+<script>
+function register(){
+
+fetch("http://127.0.0.1:5000/register",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+first_name:fname.value,
+last_name:lname.value,
+mobile:mobile.value,
+email:email.value
+})
+})
+.then(r=>r.json())
+.then(data=>{
+
+alert(
+"Account Number : "+data.account_number+
+"\nCustomer ID : "+data.customer_id
+);
+
+window.location="login.html";
+
+});
+}
+</script>
+
+</body>
+</html>

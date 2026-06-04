@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+</head>
+<body>
+
+<h1>SK Bank Dashboard</h1>
+
+<h3 id="name"></h3>
+<p id="acc"></p>
+<p id="cid"></p>
+<p id="bal"></p>
+
+<script>
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+name.innerHTML =
+"Account Holder : " + user.name;
+
+acc.innerHTML =
+"Account Number : " + user.account_number;
+
+cid.innerHTML =
+"Customer ID : " + user.customer_id;
+
+bal.innerHTML =
+"Balance : ₹" + user.balance;
+
+</script>
+
+</body>
+</html>
