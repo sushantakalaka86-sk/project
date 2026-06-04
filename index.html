@@ -1,46 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>SK Bank</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK Bank - Open Account</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f4c81,#1e88e5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    width:350px;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+    animation:fadeIn 1s;
+}
+
+h2{
+    text-align:center;
+    color:#0f4c81;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    margin-top:15px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.create-btn{
+    background:#28a745;
+    color:white;
+}
+
+.login-btn{
+    background:#007bff;
+    color:white;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+
 </head>
 <body>
 
-<h2>Open Zero Balance Account</h2>
+<div class="container">
 
-<input id="fname" placeholder="First Name"><br><br>
-<input id="lname" placeholder="Last Name"><br><br>
-<input id="mobile" placeholder="Mobile Number"><br><br>
-<input id="email" placeholder="Email"><br><br>
+<h2>SK Bank</h2>
+<h3>Open Zero Balance Account</h3>
 
-<button onclick="register()">Create Account</button>
+<input type="text" id="fname" placeholder="First Name">
+
+<input type="text" id="lname" placeholder="Last Name">
+
+<input type="text" id="mobile" placeholder="Mobile Number">
+
+<input type="email" id="email" placeholder="Email Address">
+
+<button class="create-btn" onclick="register()">
+Create Account
+</button>
+
+<button class="login-btn" onclick="goToLogin()">
+Login
+</button>
+
+</div>
 
 <script>
+
 function register(){
 
+let first_name = document.getElementById("fname").value;
+let last_name = document.getElementById("lname").value;
+let mobile = document.getElementById("mobile").value;
+let email = document.getElementById("email").value;
+
+if(first_name=="" || last_name=="" || mobile=="" || email==""){
+    alert("Please fill all fields");
+    return;
+}
+
 fetch("http://127.0.0.1:5000/register",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-first_name:fname.value,
-last_name:lname.value,
-mobile:mobile.value,
-email:email.value
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        first_name:first_name,
+        last_name:last_name,
+        mobile:mobile,
+        email:email
+    })
 })
-})
-.then(r=>r.json())
+.then(response=>response.json())
 .then(data=>{
 
 alert(
+"Account Created Successfully!\n\n"+
 "Account Number : "+data.account_number+
 "\nCustomer ID : "+data.customer_id
 );
 
-window.location="login.html";
+window.location.href="login.html";
 
+})
+.catch(error=>{
+    alert("Server Connection Failed");
+    console.log(error);
 });
+
 }
+
+function goToLogin(){
+    window.location.href="login.html";
+}
+
 </script>
 
 </body>
